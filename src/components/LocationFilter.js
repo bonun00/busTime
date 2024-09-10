@@ -36,7 +36,7 @@ const LocationFilter = () => {
     const rows = XLSX.utils.sheet_to_json(sheet, { header: 1 });
 
     const startColumnIndex = 1;
-    const endColumnIndex = 19;
+    const endColumnIndex = 18;
 
     setRows(rows);
 
