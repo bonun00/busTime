@@ -6,7 +6,7 @@ import App from './App'; // App 컴포넌트를 불러옴
 const root = ReactDOM.createRoot(document.getElementById('root')); // 'root' 엘리먼트에 렌더링
 root.render(
   <React.StrictMode>
-    <App /> {/* App 컴포넌트를 렌더링 */}
+    <App/> {/* App 컴포넌트를 렌더링 */}
   </React.StrictMode>
 );
 

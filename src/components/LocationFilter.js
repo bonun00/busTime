@@ -26,7 +26,7 @@ const LocationFilter = () => {
   }, []);
 
   const loadData = async () => {
-    const response = await fetch('/data.xlsx');
+    const response = await fetch('/REPOSITORY_NAME/data.xlsx');
     const arrayBuffer = await response.arrayBuffer();
     const data = new Uint8Array(arrayBuffer);
     const workbook = XLSX.read(data, { type: 'array' });
