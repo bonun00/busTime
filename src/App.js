@@ -23,7 +23,7 @@ const MainPage = () => {
 
 const App = () => {
   return (
-    <Router basename="/REPOSITORY_NAME">
+    <Router basename="/busTime">
       <Routes>
         <Route path="/" element={<MainPage />} />
         <Route path="/location-filter" element={<LocationFilter />} />
