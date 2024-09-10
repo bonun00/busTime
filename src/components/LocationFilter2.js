@@ -26,7 +26,7 @@ const LocationFilter2 = () => {
   }, []);
 
   const loadData = async () => {
-    const response = await fetch('/busTime/data2.xlsx');
+    const response = await fetch(`${process.env.PUBLIC_URL}/data2.xlsx`);
     const arrayBuffer = await response.arrayBuffer();
     const data = new Uint8Array(arrayBuffer);
     const workbook = XLSX.read(data, { type: 'array' });

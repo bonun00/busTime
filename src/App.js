@@ -1,7 +1,8 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
+import { HashRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import LocationFilter from './components/LocationFilter'; // LocationFilter 컴포넌트 경로 맞게 설정
-import LocationFilter2 from './components/LocationFilter2'; // LocationFilter 컴포넌트 경로 맞게 설정
+import LocationFilter2 from './components/LocationFilter2'; // LocationFilter2 컴포넌트 경로 맞게 설정
+
 const MainPage = () => {
   return (
     <div style={{ padding: '10px', textAlign: 'center', fontSize: '2rem' }}>
@@ -23,7 +24,7 @@ const MainPage = () => {
 
 const App = () => {
   return (
-    <Router basename="/busTime">
+    <Router>
       <Routes>
         <Route path="/" element={<MainPage />} />
         <Route path="/location-filter" element={<LocationFilter />} />
