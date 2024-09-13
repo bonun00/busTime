@@ -1,0 +1,144 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    min-height: fit-content;
+    height: auto; /* 콘텐츠에 맞춰 높이 조정 */
+    padding: 5%;
+    box-sizing: border-box; /* 패딩 포함 */
+    text-align: center;
+    /* overflow: auto; 수평 및 수직 스크롤 가능 */
+    justify-content: center; 
+    align-items: center;
+}
+
+.title {
+    font-size: 6vw;
+    font-weight: bold;
+    color: #388e3c;
+}
+.select-container {
+    margin-bottom: 5%;
+    display: flex;
+    align-items: center; /* 세로 가운데 정렬 */
+    justify-content: center; /* 수평 가운데 정렬 */
+    width: 100%;
+}
+
+.select-label {
+    font-size: 3vw;
+    color: #6d4c41;
+    font-weight: 600;
+    margin-right: 10px; /* 드롭다운과 라벨 사이 간격 */
+    flex-shrink: 0;
+    width: auto;
+    text-align: center;
+}
+
+
+.select-input {
+    font-size: 4vw;
+    padding: 8px;
+    width: 80%; /* 모바일에서 가운데 정렬을 위해 너비를 80%로 설정 */
+    max-width: 400px; /* 최대 너비 제한 */
+    border-radius: 30px;
+    border: 1px solid #388e3c;
+    color: #6d4c41;
+    background-color: #fff;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    box-sizing: border-box;
+}
+
+.results-container {
+    margin-bottom: 5%;
+    max-width: 100%; /* 결과 컨테이너 너비 100%로 설정 */
+    max-height: 80vh; /* 최대 높이 설정으로 스크롤 영역 늘리기 */
+    /* overflow-y: auto; 세로 스크롤 추가 */
+}
+
+.results-title {
+    font-size: 5vw;
+    font-weight: bold;
+    color: #388e3c;
+}
+
+.no-results {
+    font-size: 5vw;
+    color: #d32f2f;
+}
+
+.results-subtitle {
+    font-size: 4vw;
+    color: #6d4c41;
+}
+.main-time{
+    cursor: pointer;
+    text-align: center;
+    font-size: 5vw;
+    color: #388e3c;
+    font-weight: bold;
+}
+
+
+.time-item {
+    cursor: pointer;
+    text-align: center;
+    font-size: 5vw;
+    color: #6d4c41;
+    font-weight: bold;
+}
+
+.row-data-container {
+    margin-top: 10px;
+    text-align: center;
+    font-size: 4vw;
+    color: #6d4c41;
+    box-sizing: border-box;
+}
+
+.row-data {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    color: #6d4c41;
+    box-sizing: border-box;
+}
+
+.terminal-info {
+    margin-top: 10px;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+@media (max-width: 768px) {
+    .title {
+        font-size: 8vw;
+    }
+
+    .select-container {
+        flex-direction: column; /* 모바일에서 라벨과 셀렉트를 세로로 배치 */
+        align-items: center; /* 가운데 정렬 */
+        justify-content: center;
+    }
+
+    .select-label {
+        margin-right: 0; /* 세로 배치일 때 우측 여백 제거 */
+        margin-bottom: 10px; /* 라벨과 드롭다운 사이 간격 추가 */
+        font-size: 5vw; /* 글자 크기 모바일에 맞게 조정 */
+    }
+
+    .select-input {
+        width: 100%; /* 모바일에서 드롭다운 너비 조정 */
+        max-width: 100px; /* 드롭다운 최대 너비 제한 */
+        align-items: center; /* 가운데 정렬 */
+    }
+    .results-title, .no-results, .results-subtitle {
+        font-size: 4vw;
+    }
+
+    .time-item, .row-data {
+        font-size: 4vw;
+    }
+}

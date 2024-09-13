@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import * as XLSX from 'xlsx';
+import './GoStyles.css'; // CSS 파일 임포트
 
 const formatTime = (time) => {
   if (typeof time === 'number' && !isNaN(time)) {
@@ -10,7 +11,7 @@ const formatTime = (time) => {
   return time || '';
 };
 
-const LocationFilter2 = () => {
+const GoMasanBus = () => {
   const [locations, setLocations] = useState([]);
   const [busNumbers, setBusNumbers] = useState([]);
   const [selectedLocation, setSelectedLocation] = useState(null);
@@ -21,9 +22,14 @@ const LocationFilter2 = () => {
   const [expandedRow, setExpandedRow] = useState(null);
   const [showResults, setShowResults] = useState(false); // 확인 버튼 클릭 상태
   const [noResults, setNoResults] = useState(false); // 데이터 없음 상태
+
   useEffect(() => {
     loadData();
   }, []);
+
+  useEffect(() => {
+    filterTimes(); // 드롭다운 선택 시마다 필터링
+  }, [selectedLocation, selectedBusNumber]);
 
   const loadData = async () => {
     const response = await fetch(`${process.env.PUBLIC_URL}/data2.xlsx`);
@@ -51,7 +57,7 @@ const LocationFilter2 = () => {
     setBusNumbers(
       rows.slice(5, 87)
         .map(row => row[0]?.split('-')[0]) // 000-00 형식에서 앞 세 자리만 추출
-        .filter((value, index, self) => 
+        .filter((value, index, self) =>
           (value === '113' || value === '250') && self.indexOf(value) === index
         )
     );
@@ -70,25 +76,25 @@ const LocationFilter2 = () => {
       const endCol = 27;
 
       const filteredDataList = rows
-      .slice(startRow, endRow + 1)
-      .filter((row) => row[0]?.split('-')[0] === selectedBusNumber) // 버스 번호가 선택된 것과 일치하는지 확인
-      .map((row) => {
-        const timeData = row.slice(startCol, endCol + 1);
-        const time = formatTime(timeData[locationIndex]);
-        const terminal = row[28] || '--';
-        const startStation = row[1] || '--'; // 기점 정류장
-        const startTime = formatTime(row[2]); // 기점 시간
-        return {
-          time,
-          terminal,
-          startStation,
-          startTime,
-          rowData: row,
-          locationData: timeData
-        };
-      })
-      .filter((data) => data.time !== undefined && data.time !== '');
-      setShowResults(true); 
+        .slice(startRow, endRow + 1)
+        .filter((row) => row[0]?.split('-')[0] === selectedBusNumber) // 버스 번호가 선택된 것과 일치하는지 확인
+        .map((row) => {
+          const timeData = row.slice(startCol, endCol + 1);
+          const time = formatTime(timeData[locationIndex]);
+          const terminal = row[28] || '--';
+          const startStation = row[1] || '--'; // 기점 정류장
+          const startTime = formatTime(row[2]); // 기점 시간
+          return {
+            time,
+            terminal,
+            startStation,
+            startTime,
+            rowData: row,
+            locationData: timeData
+          };
+        })
+        .filter((data) => data.time !== undefined && data.time !== '');
+      setShowResults(true);
       setNoResults(filteredDataList.length === 0);
       setFilteredData(filteredDataList);
     }
@@ -103,33 +109,46 @@ const LocationFilter2 = () => {
     const formatted = [];
     const startStation = rowData[1]; // 기점 정류장
     const startTime = formatTime(rowData[2]); // 기점 시간
+  
     if (startStation && startTime) {
-        formatted.push(`${startTime} (${startStation})`);
+      formatted.push(
+        <React.Fragment key="start">
+          <strong className="time-item">{startTime}</strong> ({startStation}) {' -> '}
+        </React.Fragment>
+      );
     }
-
+  
     for (let i = 3; i <= 27; i++) {
       const time = formatTime(rowData[i]);
       const location = locations[i - 3]; // 올바른 인덱스 범위
       if (time && location) {
-        formatted.push(`${time} (${location})`);
+        formatted.push(
+          <React.Fragment key={`stop-${i}`}>
+            <strong className="time-item">{time}</strong> ({location}) {i !== 27 ? ' -> ' : ''}
+          </React.Fragment>
+        );
       }
     }
-    return formatted.join(' -> ');
+  
+    return formatted;
   };
 
   return (
-    <div style={{ padding: '5%', textAlign: 'center' }}>
-      <h1 style={{ fontSize: '4vw' }}>삼칠, 대산 -{'>'} 창원, 남마산, 마산</h1>
-
-      <div style={{ marginBottom: '5%' }}>
-        <label style={{ fontSize: '3vw' }}>버스 번호 :</label>
+    <div className="container">
+      <h1 className="title">
+       삼칠/대산  → 창원/마산
+      </h1>
+      <div className="select-container">
+        <label className="select-label">
+          버스 번호
+        </label>
         <select
           value={selectedBusNumber || ''}
           onChange={(e) => setSelectedBusNumber(e.target.value)}
-          style={{ fontSize: '3vw', marginLeft: '10px', width: '90%', maxWidth: '400px' }}
+          className="select-input"
         >
           <option value="" disabled>
-            버스 번호를 선택하세요
+            버스 번호
           </option>
           {busNumbers.map((number, index) => (
             <option key={index} value={number}>
@@ -138,16 +157,18 @@ const LocationFilter2 = () => {
           ))}
         </select>
       </div>
-
-      <div style={{ marginBottom: '5%' }}>
-        <label style={{ fontSize: '3vw' }}>정류장 :</label>
+  
+      <div className="select-container">
+        <label className="select-label">
+          정류장
+        </label>
         <select
           value={selectedLocation || ''}
           onChange={(e) => setSelectedLocation(e.target.value)}
-          style={{ fontSize: '3vw', marginLeft: '10px', width: '90%', maxWidth: '400px' }}
+          className="select-input"
         >
           <option value="" disabled>
-            정류장을 선택하세요
+            정류장
           </option>
           {locations.map((location, index) => (
             <option key={index} value={location}>
@@ -156,45 +177,42 @@ const LocationFilter2 = () => {
           ))}
         </select>
       </div>
-
-      <button
-        onClick={filterTimes}
-        style={{ fontSize: '3vw', padding: '10px 20px', marginTop: '5%' }}
-      >
-        확인
-      </button>
-      <div style={{ marginTop: '5%' }}>
-      {showResults && (
-    <>
-      {noResults ? (
-        <h3 style={{ fontSize: '4vw' }}>해당 버스 시간은 없습니다.</h3>
-      ) : (
-        <>
-          <h3 style={{ fontSize: '4vw' }}>
-            {selectedLocation ? `${selectedLocation} 버스 시간` : '버스 시간'}
-          </h3>
-          <h3 style={{ fontSize: '2vw' }}>시간을 클릭하면 해당하는 버스 노선 시간을 볼 수 있습니다.</h3>
-        </>
-      )}
-    </>
-  )}
-        <div style={{ fontSize: '2vw' }}>
+  
+      <div className="results-container">
+        {showResults && (
+          <>
+            {noResults ? (
+              <h3 className="no-results">
+                해당 버스 시간은 없습니다.
+              </h3>
+            ) : (
+              <>
+                <h3 className="results-title">
+                  {selectedLocation ? `${selectedLocation} 버스 시간` : '버스 시간'}
+                </h3>
+                <h4 className="results-subtitle">시간을 클릭하면 노선을 볼 수 있습니다.</h4>
+              </>
+            )}
+          </>
+        )}
+  
+        <div className="row-data-container">
           {filteredData.map((data, index) => (
             <div key={index}>
               <div
-                style={{ cursor: 'pointer', textAlign: 'center', fontSize: '4vw' }}
+                className="main-time"
                 onClick={() => handleRowClick(index)}
               >
                 {data.time}
               </div>
               {expandedRow === index && (
-                <div style={{ marginTop: '10px', textAlign: 'center', fontSize: '2vw' }}>
-                  <div><strong>버스 노선</strong></div>
-                  <div style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center' }}>
+                <div className="row-data">
+                  <strong>버스 노선</strong>
+                  <div className="row-data-container">
                     <div>{formatRowData(data.rowData)}</div>
                   </div>
-                  <div style={{ marginTop: '10px', textAlign: 'center' }}>
-                    <strong>종점: {data.terminal}</strong> {/* 종점 */}
+                  <div className="terminal-info">
+                    <strong>종점: {data.terminal}</strong>
                   </div>
                 </div>
               )}
@@ -206,4 +224,4 @@ const LocationFilter2 = () => {
   );
 };
 
-export default LocationFilter2;
+export default GoMasanBus;

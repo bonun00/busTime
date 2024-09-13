@@ -1,0 +1,55 @@
+/* MainPage.css */
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* 화면 전체 높이 */
+  width: 100vw; /* 화면 전체 너비 */
+  padding: 10px;
+  text-align: center;
+  background: #f0f8f0; /* 배경색 */
+  box-sizing: border-box; /* 패딩과 보더를 포함한 전체 크기 계산 */
+}
+
+.header {
+  font-size: 2rem;
+  margin: 0;
+  font-family: 'Roboto', sans-serif; /* 폰트 설정 */
+  color: #388e3c; /* 텍스트 색상 */
+}
+
+.header-mobile {
+  font-size: 1.5rem; /* 모바일 화면에서 폰트 크기 조정 */
+}
+
+.button {
+  font-size: 1rem;
+  padding: 12px 24px;
+  margin-top: 20px;
+  background-color: #388e3c;
+  color: #fff;
+  border: none;
+  border-radius: 50px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+  text-align: center;
+}
+
+.button:hover {
+  background-color: #2e7d32; /* 색상 변화 */
+}
+
+.button:focus {
+  outline: none; /* 포커스 스타일 제거 */
+}
+
+.bmc-button {
+  margin-top: 100px;
+}
+
+.bmc-button img {
+  width: 20rem;
+  height: auto; /* 버튼의 너비와 높이 조정 */
+}
