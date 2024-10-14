@@ -6,9 +6,9 @@
     padding: 5%;
     box-sizing: border-box; /* 패딩 포함 */
     text-align: center;
-    /* overflow: auto; 수평 및 수직 스크롤 가능 */
     justify-content: center; 
     align-items: center;
+    height: 100vh; /* 전체 화면을 차지 */
 }
 
 .title {
@@ -51,10 +51,13 @@
 }
 
 .results-container {
-    margin-bottom: 5%;
-    max-width: 100%; /* 결과 컨테이너 너비 100%로 설정 */
-    max-height: 80vh; /* 최대 높이 설정으로 스크롤 영역 늘리기 */
-    /* overflow-y: auto; 세로 스크롤 추가 */
+ 
+    margin-bottom: 50px; 
+    max-height: 200vh;
+    flex-grow: 1; /* 화면의 남은 공간을 차지 */
+    max-width: 50%;
+    width: 70%;
+    overflow-y: auto
 }
 
 .results-title {
@@ -111,6 +114,43 @@
     text-align: center;
     box-sizing: border-box;
 }
+.checkbox-container {
+    margin-bottom: 5%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.checkbox-label {
+    font-size: 3vw;
+    color: #6d4c41;
+    font-weight: 600;
+    margin-bottom: 10px; /* 레이블과 체크박스 그룹 사이 간격 */
+}
+
+.checkbox-group {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px; /* 체크박스 옵션 사이 간격 */
+}
+
+.checkbox-option {
+    font-size: 3vw;
+    color: #388e3c;
+    display: flex;
+    align-items: center;
+}
+
+.checkbox-input {
+    margin-right: 5px; /* 체크박스와 레이블 사이 간격 */
+    width: 20px;
+    height: 20px;
+    accent-color: #388e3c; /* 체크박스 선택 시 색상 */
+}
+
 
 @media (max-width: 768px) {
     .title {
@@ -137,8 +177,27 @@
     .results-title, .no-results, .results-subtitle {
         font-size: 4vw;
     }
-
+    .results-container {
+        /* margin-bottom: 5%; */
+        margin-bottom: 50px; 
+        max-width: 100%; 
+        max-height: 200vh; 
+   
+    }
+    
     .time-item, .row-data {
         font-size: 4vw;
+    }
+    .checkbox-label {
+        font-size: 5vw; /* 모바일에 맞게 글자 크기 조정 */
+    }
+
+    .checkbox-option {
+        font-size: 7vw; /* 모바일에 맞게 글자 크기 조정 */
+    }
+
+    .checkbox-input {
+        width: 30px; /* 모바일에 맞게 크기 조정 */
+        height: 30px;
     }
 }

@@ -1,0 +1,21 @@
+.install-guide {
+    text-align: center;
+    padding: 20px;
+  }
+  
+  .install-guide h2 {
+    color: #388e3c;
+  }
+  
+  .install-guide ol {
+    text-align: left;
+    margin-top: 20px;
+    padding-left: 40px;
+  }
+  
+  .install-image {
+    margin-top: 20px;
+    width: 100%;
+    max-width: 400px; /* 필요에 따라 조정 */
+    border-radius: 10px;
+  }

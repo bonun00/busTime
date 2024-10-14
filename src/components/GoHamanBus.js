@@ -4,8 +4,8 @@ import './GoStyles.css';
 
 const formatTime = (time) => {
   if (typeof time === 'number' && !isNaN(time)) {
-    const hours = Math.floor(time * 24); // 시간 계산
-    const minutes = Math.round((time * 24 - hours) * 60); // 분 계산
+    const hours = Math.floor(time * 24);
+    const minutes = Math.round((time * 24 - hours) * 60);
     return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}`;
   }
   return time || '';
@@ -15,13 +15,12 @@ const GoHamanBus = () => {
   const [locations, setLocations] = useState([]);
   const [busNumbers, setBusNumbers] = useState([]);
   const [selectedLocation, setSelectedLocation] = useState(null);
-  const [selectedBusNumber, setSelectedBusNumber] = useState(null);
+  const [selectedBusNumber, setSelectedBusNumber] = useState([]); // 빈 배열로 초기화
   const [filteredData, setFilteredData] = useState([]);
-  const [columnHeaders, setColumnHeaders] = useState([]);
   const [rows, setRows] = useState([]);
   const [expandedRow, setExpandedRow] = useState(null);
-  const [showResults, setShowResults] = useState(false); // 확인 버튼 클릭 상태
-  const [noResults, setNoResults] = useState(false); // 데이터 없음 상태
+  const [showResults, setShowResults] = useState(false);
+  const [noResults, setNoResults] = useState(false);
 
   useEffect(() => {
     loadData();
@@ -29,7 +28,7 @@ const GoHamanBus = () => {
 
   useEffect(() => {
     filterTimes();
-  }, [selectedLocation, selectedBusNumber]); // 선택된 정류장과 버스 번호가 변경될 때마다 자동으로 호출
+  }, [selectedLocation, selectedBusNumber]);
 
   const loadData = async () => {
     const response = await fetch(`${process.env.PUBLIC_URL}/data.xlsx`);
@@ -46,27 +45,25 @@ const GoHamanBus = () => {
 
     setRows(rows);
 
-    // 5번째 행의 정류장 목록을 설정
     setLocations(
       rows[5]
         .slice(startColumnIndex, endColumnIndex + 1)
-        .filter((value) => value !== undefined && value !== ''), // 1열부터 18열까지
+        .filter((value) => value !== undefined && value !== ''),
     );
 
-    // 0번째 열에서 버스 번호 가져오기, '-'를 기준으로 분리한 후 앞 세 자리만 추출
     setBusNumbers(
       rows.slice(6, 87 + 1)
-        .map(row => row[0]?.split('-')[0]) // 000-00 형식에서 앞 세 자리만 추출
+        .map(row => row[0]?.split('-')[0])
         .filter((value, index, self) => 
           (value === '113' || value === '250') && self.indexOf(value) === index
         )
     );
 
-    setColumnHeaders(rows[0]);
+    // setColumnHeaders(rows[0]);
   };
 
   const filterTimes = () => {
-    if (!selectedLocation || !selectedBusNumber) return;
+    if (!selectedLocation || selectedBusNumber.length === 0) return;
 
     const locationIndex = locations.indexOf(selectedLocation);
     if (locationIndex !== -1 && rows.length > 0) {
@@ -75,10 +72,9 @@ const GoHamanBus = () => {
       const startCol = 1;
       const endCol = 23;
 
-      // 선택한 버스 번호와 정류장에 맞는 시간 필터링
       const filteredDataList = rows
         .slice(startRow, endRow + 1)
-        .filter((row) => row[0]?.split('-')[0] === selectedBusNumber) // 버스 번호가 선택된 것과 일치하는지 확인
+        .filter((row) => selectedBusNumber.includes(row[0]?.split('-')[0]))
         .map((row) => {
           const timeData = row.slice(startCol, endCol + 1);
           const time = formatTime(timeData[locationIndex]);
@@ -91,6 +87,7 @@ const GoHamanBus = () => {
           };
         })
         .filter((data) => data.time !== undefined && data.time !== '');
+
       setShowResults(true); 
       setNoResults(filteredDataList.length === 0);
       setFilteredData(filteredDataList);
@@ -101,7 +98,6 @@ const GoHamanBus = () => {
     setExpandedRow(expandedRow === index ? null : index);
   };
 
-  // 정류장명(19번, 21번 열)과 시간(20번, 22번 열)을 매칭시키고 종점(23번 열)을 표시하는 함수
   const formatRowData = (rowData) => {
     const formatted = [];
   
@@ -118,9 +114,8 @@ const GoHamanBus = () => {
       }
     }
   
-    // 19-20번 열: 첫 번째 정류장과 시간
-    const stop1 = rowData[19]; // 정류장명 (19번 열)
-    const time1 = formatTime(rowData[20]); // 시간 (20번 열)
+    const stop1 = rowData[19];
+    const time1 = formatTime(rowData[20]);
     if (stop1 && time1) {
       formatted.push(
         <React.Fragment key="stop1">
@@ -129,9 +124,8 @@ const GoHamanBus = () => {
       );
     }
   
-    // 21-22번 열: 두 번째 정류장과 시간
-    const stop2 = rowData[21]; // 정류장명 (21번 열)
-    const time2 = formatTime(rowData[22]); // 시간 (22번 열)
+    const stop2 = rowData[21];
+    const time2 = formatTime(rowData[22]);
     if (stop2 && time2) {
       formatted.push(
         <React.Fragment key="stop2">
@@ -146,31 +140,40 @@ const GoHamanBus = () => {
   return (
     <div className="container">
       <h1 className="title">
-        창원/마산 → 삼칠/대산
+        창원/마산 ▶ 삼칠/대산
       </h1>
-      <div className="select-container">
-        <label className="select-label">
-          버스 번호
+      
+      <div className="checkbox-container">
+        <label className="checkbox-label">
+        🚍 버스 노선
         </label>
-        <select
-          value={selectedBusNumber || ''}
-          onChange={(e) => setSelectedBusNumber(e.target.value)}
-          className="select-input"
-        >
-          <option value="" disabled>
-            버스 번호
-          </option>
+        <div className="checkbox-group">
           {busNumbers.map((number, index) => (
-            <option key={index} value={number}>
+            <label key={index} className="checkbox-option">
+              <input
+                type="checkbox"
+                value={number}
+                checked={selectedBusNumber.includes(number)}
+                onChange={(e) => {
+                  if (e.target.checked) {
+                    setSelectedBusNumber([...selectedBusNumber, number]);
+                  } else {
+                    setSelectedBusNumber(
+                      selectedBusNumber.filter((num) => num !== number)
+                    );
+                  }
+                }}
+                className="checkbox-input"
+              />
               {number}
-            </option>
+            </label>
           ))}
-        </select>
+        </div>
       </div>
-  
+
       <div className="select-container">
         <label className="select-label">
-          정류장
+        🚏 정류장
         </label>
         <select
           value={selectedLocation || ''}
@@ -178,7 +181,7 @@ const GoHamanBus = () => {
           className="select-input"
         >
           <option value="" disabled>
-            정류장
+           정류장
           </option>
           {locations.map((location, index) => (
             <option key={index} value={location}>
@@ -217,7 +220,7 @@ const GoHamanBus = () => {
               </div>
               {expandedRow === index && (
                 <div className="row-data">
-                  <strong>버스 노선</strong>
+                  <strong>🚍버스 노선</strong>
                   <div className="row-data-container">
                     <div>{formatRowData(data.rowData)}</div>
                   </div>
