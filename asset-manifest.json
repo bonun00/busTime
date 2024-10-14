@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/busTime/static/css/main.31cd5cc1.css",
-    "main.js": "/busTime/static/js/main.81181fd5.js",
+    "main.css": "/busTime/static/css/main.f686f895.css",
+    "main.js": "/busTime/static/js/main.47fc712f.js",
     "index.html": "/busTime/index.html",
-    "main.31cd5cc1.css.map": "/busTime/static/css/main.31cd5cc1.css.map",
-    "main.81181fd5.js.map": "/busTime/static/js/main.81181fd5.js.map"
+    "main.f686f895.css.map": "/busTime/static/css/main.f686f895.css.map",
+    "main.47fc712f.js.map": "/busTime/static/js/main.47fc712f.js.map"
   },
   "entrypoints": [
-    "static/css/main.31cd5cc1.css",
-    "static/js/main.81181fd5.js"
+    "static/css/main.f686f895.css",
+    "static/js/main.47fc712f.js"
   ]
 }
