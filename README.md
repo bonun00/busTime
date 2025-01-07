@@ -1,70 +1,38 @@
-# Getting Started with Create React App
+🚍 농어촌 버스 시간표 프로젝트
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+농어촌 버스 시간표 프로젝트는 사용자들이 농어촌 지역의 버스 시간표를 간편하게 검색할 수 있도록 만든 서비스입니다. 현재는 React로 구축된 프론트엔드 기능만 구현된 상태이며, 앞으로 다양한 기능을 추가하여 사용자 경험을 향상시킬 예정입니다.
 
-## Available Scripts
+📌 현재 구현된 기능
+	1.	버스 시간표 검색
+	•	Excel 데이터를 기반으로 특정 버스 번호 또는 정류장을 검색하여 관련 시간표를 확인할 수 있습니다.
+	•	직관적인 UI로 간단하고 빠르게 시간표를 탐색할 수 있습니다.
 
-In the project directory, you can run:
+ 🚀 향후 계획
+	1.	백엔드 통합
+	•	Spring Boot를 사용하여 API를 개발하고 데이터베이스로 시간표 데이터를 관리할 예정입니다.
+	2.	즐겨찾기 기능
+	•	자주 이용하는 정류장 및 노선을 즐겨찾기에 추가하여 빠르게 접근할 수 있는 기능 추가.
+	3.	실시간 버스 위치 확인
+	•	공공 데이터 API와 Kakao Maps API를 활용하여 실시간 버스 위치를 지도에 표시.
+	4.	익명 메시지 게시판
+	•	사용자 피드백을 수집할 수 있는 간단한 익명 게시판 기능 구현.
+	5.	반응형 UI
+	•	모바일 환경에서도 최적화된 사용자 경험을 제공. 
 
-### `npm start`
+ 
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+  📖 프로젝트 동기
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+  농어촌 지역 주민들이 버스 시간표를 확인하는 데 불편함을 겪는 문제를 해결하고자 시작한 프로젝트입니다. 초기에는 프론트엔드 중심으로 시작했으며, 이후 백엔드 및 실시간 데이터 연동으로 확장할 계획입니다.
 
-### `npm test`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+  🚌링크
+  https://bonun00.github.io/busTime/
 
-### `npm run build`
+  
+  🛠️ 사용된 기술 스택
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+  프론트엔드
+	•	React
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+ 
